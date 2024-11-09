@@ -284,7 +284,7 @@ DLLEXPORT(void*) createRedirectableFunction(
         if (!rdr)return NULL;
     }
     rdr->dstfunction = memoryLocation;
-    rdr->freeAddress = rdr;
+    rdr->freeAddress = (MemoryBlock*)rdr - 1;
     generate_jmp_code(rdr->codeBuffer, GetRedirectableAddr(), rdr);
     if (memoryLocation)FlushInstructionCache(GetCurrentProcess(), NULL, 0);
     else FlushInstructionCache(GetCurrentProcess(), rdr->codeBuffer, sizeof(rdr->codeBuffer));
@@ -375,7 +375,7 @@ DLLEXPORT(void*) createCallableFunction(
     r10->arg2 = va_arg(arglist, unsigned __int64);
     r10->functionDest = functionAddress;
     r10->argflags = argfloat_flags;
-    r10->freeAddress = r10;
+    r10->freeAddress = (MemoryBlock*)r10 - 1;
     r10->argcount = argcount_dst;
     r10->bHasCriticalSection = threadsafety;
     r10->bReleaseCsAfterArguments = (threadsafety == arginitialize_threadsafe);
