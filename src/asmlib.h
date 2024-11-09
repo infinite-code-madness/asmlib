@@ -273,7 +273,7 @@ enum Asm_ThreadSafetyLevel : unsigned char {
 // Like VAListCall, but behaves correctly if the function returns either a float or a double
 // and returns the result with the correct type without a call to ASM_UINT64_AS_TYPE being necessary.
 // For parameter meaning, see VAListCall
-#define ASM_VALISTCALL(function, list, length, restype) (((restype(*)(_SAL(_In_) va_list,_SAL(_In_) size_t,_SAL(_In_) size_t))(&VAListCall))(function, list, length))
+#define ASM_VALISTCALL(restype, function, list, length) (((restype(*)(_SAL(_In_)void*, _SAL(_In_) va_list,_SAL(_In_) size_t))(&VAListCall))(function, list, length))
 
 #define _ASMLIB_INCLUDED
 #endif // !_ASMLIB_INCLUDED
